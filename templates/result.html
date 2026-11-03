@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Examination result{% endblock %}
+{% block content %}
+<section class="result-card">
+  <div class="result-check">✓</div><p class="eyebrow">EXAMINATION COMPLETE</p><h1>{{ result.exam_name }}</h1>
+  <p class="result-message">Your submission has been recorded. Here’s your result.</p>
+  <div class="score">{{ result.score }}<span> / {{ result.total_marks }}</span></div>
+  <div class="score-track"><span style="width:{{ (result.score / result.total_marks * 100) if result.total_marks else 0 }}%"></span></div>
+  <p class="muted">Submitted {{ result.submitted_at }}</p>
+  {% if session.get('role') == 'student' %}
+    <div class="result-actions">
+      <a class="primary button" href="{{ url_for('student_dashboard') }}">Return to my examinations <span>→</span></a>
+      {% if result.is_published %}<a class="secondary button" href="{{ url_for('review_answers',result_id=result.result_id) }}">Review my answers <span>→</span></a>{% endif %}
+    </div>
+  {% else %}<a class="primary button" href="{{ url_for('admin_dashboard') }}">Back to dashboard <span>→</span></a>{% endif %}
+</section>
+{% endblock %}

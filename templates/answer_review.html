@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Answer review · {{ result.student_name }}{% endblock %}
+{% block content %}
+{% if session.get('role') == 'student' %}<a class="back-link" href="{{ url_for('result',result_id=result.result_id) }}">← Back to my result</a>{% else %}<a class="back-link" href="{{ url_for('student_profile',student_id=result.student_id) }}">← Back to {{ result.student_name }}</a>{% endif %}
+<div class="page-heading"><div><p class="eyebrow">SUBMISSION REVIEW</p><h1>{{ result.exam_name }}</h1><p class="muted">{{ result.student_name }} · submitted {{ result.submitted_at.strftime('%b %d, %Y at %H:%M') }}</p></div><div class="score-chip">{{ result.score }} <span>/ {{ result.total_marks }}</span></div></div>
+<section class="answer-review-list">
+{% for question in answers %}
+<article class="panel answer-review-card">
+  <div class="answer-review-heading">
+    <span class="question-number">{{ '%02d'|format(loop.index) }}</span>
+    <h2>{{ question.question_text }}</h2>
+    {% if not question.answer_recorded %}<span class="badge badge-draft">Answer data unavailable</span>
+    {% elif question.selected_answer == question.correct_answer %}<span class="badge badge-live">Correct · {{ question.marks_per_question }} / {{ question.marks_per_question }} marks</span>
+    {% else %}<span class="badge badge-draft">{% if question.selected_answer %}Incorrect{% else %}Not answered{% endif %} · 0 / {{ question.marks_per_question }} marks</span>{% endif %}
+  </div>
+  <div class="answer-review-options">
+    {% for letter,text in [('A',question.option_a),('B',question.option_b),('C',question.option_c),('D',question.option_d)] %}
+    <div class="answer-review-option {% if letter == question.correct_answer %}is-correct{% endif %} {% if letter == question.selected_answer %}is-selected{% endif %}">
+      <span class="answer-review-letter">{{ letter }}</span><span>{{ text }}</span>
+      <small>{% if letter == question.correct_answer %}Correct answer{% endif %}{% if letter == question.selected_answer %}{% if letter == question.correct_answer %} · {% endif %}Student selected{% endif %}</small>
+    </div>
+    {% endfor %}
+  </div>
+</article>
+{% else %}
+<section class="panel empty-state"><h2>No question details found</h2><p>This attempt may predate answer tracking.</p></section>
+{% endfor %}
+</section>
+{% endblock %}

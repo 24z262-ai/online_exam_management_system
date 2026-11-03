@@ -1,0 +1,20 @@
+{% extends 'base.html' %}{% block title %}Online examinations, made clear{% endblock %}{% block content %}
+<section class="launch-hero reveal">
+  <div class="launch-copy"><span class="launch-kicker"><i></i> ONLINE EXAMS, WITHOUT THE CLUTTER</span><h1>A calmer way to<br><span>show what you know.</span></h1><p class="launch-lead">Take exams, see your results, and understand your progress in one focused learning space.</p>
+    <div class="launch-actions"><a class="launch-primary" href="{{ url_for('register') }}">Create a student account <span>↗</span></a><a href="{{ url_for('login') }}" class="launch-signin">Already have an account? <strong>Sign in</strong></a></div>
+    <div class="launch-proof"><span class="proof-check">✓</span> Simple for students <i></i><span class="proof-check">✓</span> Clear for educators</div>
+  </div>
+  <div class="launch-demo" aria-label="Interactive ExamDesk preview">
+    <div class="demo-window"><div class="demo-bar"><div class="demo-brand"><span class="demo-logo">E</span> ExamDesk</div><div class="demo-bar-right"><span class="demo-sample-label">INTERACTIVE PREVIEW</span><div class="demo-dots"><i></i><i></i><i></i></div></div></div>
+      <div class="demo-content"><div class="demo-intro"><div><small id="demo-eyebrow">STUDENT WORKSPACE</small><h2 id="demo-title">Your next step is ready.</h2></div><span class="demo-avatar">S</span></div>
+        <div class="demo-mode"><button class="demo-tab active" type="button" data-demo-mode="student" aria-pressed="true">Student view</button><button class="demo-tab" type="button" data-demo-mode="admin" aria-pressed="false">Admin view</button></div>
+        <div class="demo-student demo-panel" data-demo-panel="student"><article class="demo-exam"><span class="demo-exam-icon">▤</span><span class="demo-exam-title"><small>AVAILABLE EXAM</small><strong>Foundations of Biology</strong></span><span class="demo-arrow">→</span></article><div class="demo-stat-row"><div><small>COMPLETED</small><strong>04</strong></div><div><small>AVERAGE SCORE</small><strong>82<span>%</span></strong></div><div class="demo-sparkline"><small>YOUR PROGRESS</small><svg viewBox="0 0 90 28" aria-hidden="true"><path d="M2 23 C14 21,14 16,25 18 S39 13,48 15 S63 5,72 10 S83 4,88 3"/></svg></div></div></div>
+        <div class="demo-admin demo-panel" data-demo-panel="admin" hidden><div class="demo-admin-stats"><article><small>EXAMS</small><strong>12</strong><span>Manage your content</span></article><article><small>STUDENTS</small><strong>84</strong><span>Keep track of learners</span></article></div><div class="demo-activity"><span class="activity-pulse"></span><span><strong>Results at a glance</strong><small>Review recent student submissions</small></span><b>→</b></div></div>
+        <div class="demo-caption"><span class="caption-spark">✦</span><span id="demo-caption">A dedicated home for exams and progress.</span><a href="{{ url_for('features_page') }}">Explore features</a></div>
+      </div>
+    </div><span class="demo-float float-score"><b>✓</b> Result ready</span><span class="demo-float float-timer"><i></i> Timed exams</span><span class="launch-star launch-star-one">✳</span><span class="launch-star launch-star-two">✧</span>
+  </div>
+</section>
+<section class="launch-trust reveal"><span>BUILT AROUND THE EXAM EXPERIENCE</span><div><article><i class="trust-symbol purple">▤</i><strong>Focused exams</strong><small>Clear instructions, visible timer</small></article><article><i class="trust-symbol green">↗</i><strong>Instant results</strong><small>Scores calculated automatically</small></article><article><i class="trust-symbol blue">◫</i><strong>Useful insights</strong><small>See your performance over time</small></article></div></section>
+<section class="launch-bottom reveal"><div><span class="launch-kicker">START WITH A CLEAR NEXT STEP</span><h2>Your learning space is ready.</h2><p>Create a student account to see available exams and track your results.</p></div><a class="launch-primary" href="{{ url_for('register') }}">Get started <span>↗</span></a></section>
+<script src="{{ url_for('static',filename='js/landing.js') }}" defer></script>{% endblock %}

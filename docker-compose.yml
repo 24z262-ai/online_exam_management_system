@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: online_exam_db
+      MYSQL_USER: exam_user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-exam_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-local-change-me}
+      MYSQL_HOST: db
+      MYSQL_USER: exam_user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-exam_password}
+      MYSQL_DATABASE: online_exam_db
+      APP_TIMEZONE: ${APP_TIMEZONE:-Asia/Kolkata}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_NAME: ${ADMIN_NAME:-Administrator}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >-
+      sh -c "flask --app app init-db && gunicorn --bind 0.0.0.0:5000 --workers 2 app:app"
+volumes:
+  mysql_data:
