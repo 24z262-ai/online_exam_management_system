@@ -1,0 +1,22 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.12'
+  displayName: 'Set up Python'
+
+- script: |
+    python --version
+    python -m compileall -q .
+  displayName: 'Check Python syntax'
+
+- script: |
+    docker --version
+    docker compose version
+    docker compose build
+  displayName: 'Build Docker containers'
