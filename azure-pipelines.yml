@@ -1,22 +1,31 @@
+
 trigger:
-- main
+  - main
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.12'
-  displayName: 'Set up Python'
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.12'
+    displayName: 'Set up Python'
 
-- script: |
-    python --version
-    python -m compileall -q .
-  displayName: 'Check Python syntax'
+  - script: |
+      python --version
+      python -m pip install -r requirements.txt
+    displayName: 'Install Python dependencies'
 
-- script: |
-    docker --version
-    docker compose version
-    docker compose build
-  displayName: 'Build Docker containers'
+  - script: |
+      python -m compileall -q .
+    displayName: 'Check Python syntax'
+
+  - script: |
+      python -m pytest -v
+    displayName: 'Run automated tests'
+
+  - script: |
+      docker --version
+      docker compose version
+      docker compose build
+    displayName: 'Build Docker containers'
