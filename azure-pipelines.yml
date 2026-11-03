@@ -6,6 +6,9 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+  - checkout: self
+    fetchDepth: 0
+
   - task: UsePythonVersion@0
     inputs:
       versionSpec: '3.12'
@@ -23,6 +26,27 @@ steps:
   - script: |
       python -m pytest -v
     displayName: 'Run automated tests'
+
+  - task: SonarCloudPrepare@4
+    displayName: 'Prepare SonarCloud Analysis'
+    inputs:
+      SonarCloud: 'SonarCloudConnection'
+      organization: '24z262-ai'
+      scannerMode: 'cli'
+      configMode: 'manual'
+      cliProjectKey: '24z262-ai_online_exam_management_system'
+      cliProjectName: 'online_exam_management_system'
+      cliSources: '.'
+      extraProperties: |
+        sonar.exclusions=**/.venv/**,**/__pycache__/**,**/venv/**,**/site-packages/**,**/.pytest_cache/**,**/build/**,**/dist/**
+
+  - task: SonarCloudAnalyze@4
+    displayName: 'Run SonarCloud Analysis'
+
+  - task: SonarCloudPublish@4
+    displayName: 'Publish Quality Gate'
+    inputs:
+      pollingTimeoutSec: '300'
 
   - script: |
       docker --version
