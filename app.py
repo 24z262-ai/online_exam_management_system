@@ -4,6 +4,7 @@ from functools import wraps
 from zoneinfo import ZoneInfo
 
 from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
+from flask_wtf.csrf import CSRFProtect
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from config import Config
@@ -52,6 +53,8 @@ def create_app(test_config=None):
     app.config.from_object(Config)
     if test_config:
         app.config.update(test_config)
+    csrf = CSRFProtect()
+    csrf.init_app(app)
     app.teardown_appcontext(close_db)
 
     def login_required(role=None):

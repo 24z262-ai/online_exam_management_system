@@ -1,7 +1,48 @@
+# Version control and development environments
 .git
+.hg
+.svn
 .venv
 venv
-__pycache__
-.pytest_cache
-*.py[cod]
+env
+ENV
+.tox
+.nox
+
+# Secrets, credentials, and local configuration
 .env
+.env.*
+.aws
+.azure
+.ssh
+credentials/
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# Local data and generated files
+*.sqlite
+*.sqlite3
+*.db
+*.log
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+tests/
+
+# IDE and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
