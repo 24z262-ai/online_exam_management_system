@@ -27,7 +27,7 @@ steps:
       python -m pytest -v
     displayName: 'Run automated tests'
 
-  - task: SonarCloudPrepare@4.2.5
+  - task: SonarCloudPrepare@4.2.6
     displayName: 'Prepare SonarCloud Analysis'
     inputs:
       SonarCloud: 'SonarCloudConnection'
@@ -40,10 +40,10 @@ steps:
       extraProperties: |
         sonar.exclusions=**/.venv/**,**/__pycache__/**,**/venv/**,**/site-packages/**,**/.pytest_cache/**,**/build/**,**/dist/**
 
-  - task: SonarCloudAnalyze@4.2.5
+  - task: SonarCloudAnalyze@4.2.6
     displayName: 'Run SonarCloud Analysis'
 
-  - task: SonarCloudPublish@4.2.5
+  - task: SonarCloudPublish@4.2.6
     displayName: 'Publish Quality Gate'
     inputs:
       pollingTimeoutSec: '300'
